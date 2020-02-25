@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Tadabase_Demo_Api_Integration.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ServiceLayer.Interfaces;
 
 namespace Tadabase_Demo_Api_Integration
 {
@@ -41,6 +42,9 @@ namespace Tadabase_Demo_Api_Integration
             services.AddDefaultIdentity<IdentityUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+            services.AddTransient<ILoggerManager, LoggerManager>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
