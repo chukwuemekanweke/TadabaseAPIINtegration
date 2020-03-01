@@ -1,0 +1,114 @@
+﻿
+@{
+    ViewData["Title"] = "Projects";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using ModelLayer.APIRequests.Projects
+@model ProjectRecords
+
+
+<h1>Projects</h1>
+<h3>Total Records: @Model.total_items</h3>
+
+
+
+<table id="records" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Field_47</th>
+            <th>field_48</th>
+            <th>field_49</th>
+            <th>field_50</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.items)
+        {
+        <tr>
+            <td>@item.id</td>
+            <td>@item.field_47</td>
+            <td>@item.field_48</td>
+
+
+            @if (item.field_49 == null)
+            {
+                <td>
+                    NIL
+                </td>
+
+            }
+            else
+            {
+                var record = item.field_49;
+                <td>
+                    <ul class="list-group">
+                        <li class="list-group-item">Address:  @record.address</li>
+                        <li class="list-group-item">Address 2: @record.address2</li>
+                        <li class="list-group-item">City: @record.city</li>
+                        <li class="list-group-item">State: @record.city</li>
+                        <li class="list-group-item">Country: @record.country</li>
+                        <li class="list-group-item">Zip:  @record.zip</li>
+
+                        <li class="list-group-item">Long.: @record.lng</li>
+                        <li class="list-group-item">Lat.: @record.lat</li>
+
+                    </ul>
+                </td>
+
+            }
+
+            @if (item.field_50 == null)
+            {
+                <td>
+                    NIL
+                </td>
+
+            }
+            else
+            {
+                var record = item.field_50;
+                <td>
+                    <ul class="list-group">
+                        <li class="list-group-item">Start:  @record.start</li>
+                        <li class="list-group-item">End: @record.end</li>
+                        <li class="list-group-item">All Day: @record.all_day</li>
+                       
+
+                    </ul>
+                </td>
+
+            }
+
+
+        </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Id</th>
+            <th>Field_47</th>
+            <th>field_48</th>
+            <th>field_49</th>
+            <th>field_50</th>
+
+        </tr>
+    </tfoot>
+</table>
+
+
+@section Scripts{ 
+
+<script>
+
+    $(document).ready(function () {
+        $('#records').DataTable();
+
+
+    
+
+    });
+
+</script>
+    }
+

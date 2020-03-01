@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewData["Title"] = "Jobs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using ModelLayer.APIRequests.Jobs
+@model JobRecords
+
+<h1>Jobs</h1>
+<h3>Total Records: @Model.total_items</h3>
+
+
+
+<table id="records" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>field_38</th>
+        
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.items)
+        {
+            <tr>
+                <td>@item.id</td>
+               <td>@item.field_38</td>
+
+
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Id</th>
+            <th>field_38</th>
+
+        </tr>
+    </tfoot>
+</table>
+
+
+@section Scripts{
+
+    <script>
+
+    $(document).ready(function () {
+        $('#records').DataTable();
+
+
+
+
+    });
+
+    </script>
+}
+

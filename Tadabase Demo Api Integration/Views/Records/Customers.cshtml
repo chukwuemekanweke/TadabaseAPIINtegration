@@ -1,0 +1,166 @@
+﻿
+@{
+    ViewData["Title"] = "Customers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using ModelLayer.APIRequests.Customers
+@model CustomerRecords
+
+<h1>Employees</h1>
+<h3>Total Records: @Model.total_items</h3>
+
+
+
+<table id="records" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>field_41</th>
+            <th>field_42</th>
+            <th>field_61</th>
+            <th>field_62</th>
+            <th>field_63</th>
+            <th>field_64</th>
+
+            <th>field_39</th>
+            <th>field_40</th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.items)
+        {
+        <tr>
+            <td>@item.id</td>
+            <td>@item.field_41</td>
+            <td>@item.field_42</td>
+            <td>@item.field_42</td>
+
+            @if (item.field_61 == null)
+            {
+                <td>NIL</td>
+            }
+            else
+            {
+                <td>
+                    <ul class="list-group">
+                        @foreach (var entry in item.field_61)
+                        {
+                            <li class="list-group-item">Width: @entry </li>
+                        }
+                    </ul>
+
+                </td>
+
+            }
+
+
+            <td>@item.field_62</td>
+            <td>@item.field_63</td>
+            <td>@item.field_64</td>
+
+
+
+
+            @if (item.field_39 == null)
+            {
+                <td>NIL</td>
+            }
+            else
+            {
+                var record = item.field_39;
+                <td>
+                    <ul class="list-group">
+
+
+                        <li class="list-group-item">Title: @record.title </li>
+                        <li class="list-group-item">First Name: @record.first_name</li>
+                        <li class="list-group-item">Middle Name: @record.middle_name   </li>
+                        <li class="list-group-item">Last Name: @record.last_name  </li>
+
+
+
+
+                    </ul>
+                </td>
+            }
+
+
+            @if (item.field_40 == null)
+            {
+                <td>NIL</td>
+            }
+            else
+            {
+                var record = item.field_40;
+                <td>
+                    <ul class="list-group">
+
+
+                        <ul class="list-group">
+
+
+                            <li class="list-group-item">Address: @record.address </li>
+                            <li class="list-group-item">Address 2: @record.address2</li>
+                            <li class="list-group-item">City: @record.city  </li>
+                            <li class="list-group-item">State: @record.state   </li>
+                            <li class="list-group-item">Country: @record.country  </li>
+                            <li class="list-group-item">Zip: @record.zip  </li>
+                            <li class="list-group-item">Lng: @record.lng  </li>
+                            <li class="list-group-item">Lat: @record.lat  </li>
+
+
+
+
+                        </ul>
+
+
+
+                    </ul>
+                </td>
+            }
+
+
+
+
+        </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Id</th>
+            <th>field_41</th>
+            <th>field_42</th>
+            <th>field_61</th>
+            <th>field_62</th>
+            <th>field_63</th>
+            <th>field_64</th>
+
+            <th>field_39</th>
+            <th>field_40</th>
+
+
+
+
+        </tr>
+    </tfoot>
+</table>
+
+
+@section Scripts{
+
+    <script>
+
+    $(document).ready(function () {
+        $('#records').DataTable();
+
+
+
+
+    });
+
+    </script>
+}
+

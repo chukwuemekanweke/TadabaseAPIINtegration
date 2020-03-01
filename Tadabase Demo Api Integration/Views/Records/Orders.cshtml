@@ -1,0 +1,158 @@
+﻿
+@{
+    ViewData["Title"] = "Orders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using ModelLayer.APIRequests.Orders
+@model OrdersRecords
+
+<h1>Orders</h1>
+<h3>Total Records: @Model.total_items</h3>
+
+
+
+<table id="records" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Field_43</th>
+            <th>field_44</th>
+            <th>field_45</th>
+            <th>field_72</th>
+            <th>field_74</th>
+            <th>field_45_val</th>
+            <th>field_72_val</th>
+            <th>field_74_val</th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.items)
+        {
+        <tr>
+            <td>@item.id</td>
+            <td>@item.field_43</td>
+            <td>@item.field_44</td>
+            <td>
+
+                @foreach (var entry in item.field_45)
+                {
+                    <p>@entry</p>
+                }
+
+
+            </td>
+            <td>@item.field_72</td>
+            <td>@item.field_74</td>
+
+
+            @if (item.field_45_val == null)
+            {
+                <td>
+                    NIL
+                </td>
+
+            }
+            else
+            {
+                var record = item.field_45_val;
+                <td>
+                    <ul class="list-group">
+                        @foreach (var entry in item.field_45_val)
+                        {
+                            <li class="list-group-item">Address: @entry</li>
+
+                        }
+
+
+                    </ul>
+                </td>
+
+            }
+
+            @if (item.field_72_val == null)
+            {
+                <td>
+                    NIL
+                </td>
+
+            }
+            else
+            {
+                var record = item.field_72_val;
+                <td>
+                    <ul class="list-group">
+                        @foreach (var entry in record)
+                        {
+                            <li class="list-group-item">@entry.id:  @entry.val</li>
+
+                        }
+
+                    </ul>
+                </td>
+
+            }
+
+            @if (item.field_74_val == null)
+            {
+                <td>
+                    NIL
+                </td>
+
+            }
+            else
+            {
+                var record = item.field_74_val;
+                <td>
+                    <ul class="list-group">
+
+                        @foreach (var entry in record)
+                        {
+                            <li class="list-group-item">@entry.id:  @entry.val</li>
+
+                        }
+
+                    </ul>
+                </td>
+
+            }
+
+
+        </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Id</th>
+            <th>Field_43</th>
+            <th>field_44</th>
+            <th>field_45</th>
+            <th>field_72</th>
+            <th>field_74</th>
+            <th>field_45_val</th>
+            <th>field_72_val</th>
+            <th>field_74_val</th>
+
+        </tr>
+    </tfoot>
+</table>
+
+
+@section Scripts{
+
+    <script>
+
+    $(document).ready(function () {
+        $('#records').DataTable();
+
+
+
+
+    });
+
+    </script>
+}
+

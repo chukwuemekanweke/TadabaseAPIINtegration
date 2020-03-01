@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using ModelLayer.APIResponses
+@model TableFieldsResponse
+
+
+
+<div class="row">
+    <div class="col-sm-8">
+        <h1>Schema For @ViewBag.TableName Table </h1>
+    </div>
+    <div class="col-sm-4">
+        <button type="button" data-tableName="@ViewBag.TableName" data-tableId="@ViewBag.TableId" class="btn btn-primary viewRecords">View Records</button>
+
+    </div>
+</div>
+
+
+
+
+<table id="tadabaseSchema" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th>Slug</th>
+            <th>Name</th>
+            <th>Type</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var field in Model.fields)
+        {
+            <tr>
+                <td>@field.slug</td>
+                <td>@field.name</td>
+                <td>@field.type</td>
+
+
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Slug</th>
+            <th>Name</th>
+            <th>Type</th>
+
+        </tr>
+    </tfoot>
+</table>
+
+
+@section Scripts
+{
+
+    <script>
+
+        $(document).ready(function () {
+            $('#tadabaseSchema').DataTable();
+
+
+            $(".viewRecords").on("click", function () {
+
+                let tableName = $(this).attr('data-tableName');
+                let tableId = $(this).attr('data-tableId');
+
+                window.location.href = `/Records?tableName=${tableName}&tableId=${tableId}`;
+
+            });
+
+        });
+
+    </script>
+
+    }

@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using ModelLayer.APIResponses
+@model TablesForAppResponse
+
+<h1>Tadabase Data Tables</h1>
+<h3>Total Tables: @Model.total_items</h3>
+
+
+<table id="tadabaseDataTable" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th></th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var table in Model.data_tables)
+        {
+            <tr>
+                <td>@table.id</td>
+                <td>@table.name</td>
+                <td>
+
+                    <button type="button" id="@table.id" data-tableId="@table.id" data-tableName="@table.name" class="btn btn-primary viewSchema">View Schema</button>
+
+                </td>
+
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th></th>
+
+        </tr>
+    </tfoot>
+</table>
+
+@section Scripts{
+
+    <script>
+        $(document).ready(function () {
+            $('#tadabaseDataTable').DataTable();
+
+
+            $(".viewSchema").on("click", function () {
+
+                let tableName = $(this).attr('data-tableName');
+                let tableId = $(this).attr('data-tableId');
+                let url = `/Schema?tableName=${tableName}&tableId=${tableId}`
+                console.log({ url });
+
+                window.location.href = url;
+
+
+            });
+
+        });
+
+    </script>
+}

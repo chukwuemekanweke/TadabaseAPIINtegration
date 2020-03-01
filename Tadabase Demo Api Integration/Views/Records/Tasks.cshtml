@@ -1,0 +1,108 @@
+﻿
+@{
+    ViewData["Title"] = "Tasks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@using ModelLayer.APIRequests.Tasks
+@model TaskRecords
+
+<h1>Tasks</h1>
+<h3>Total Records: @Model.total_items</h3>
+
+
+
+<table id="records" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>field_57</th>
+            <th>field_58</th>
+            <th>field_59</th>
+            <th>field_60</th>
+            <th>field_60_val</th>
+            
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.items)
+        {
+        <tr>
+            <td>@item.id</td>
+            <td>@item.field_57</td>
+            <td>@item.field_58</td>
+            <td>@item.field_59</td>
+
+            <td>
+
+                @foreach (var entry in item.field_60)
+                {
+                    <p>@entry</p>
+                }
+
+
+            </td>
+            
+          
+
+            @if (item.field_60_val == null)
+            {
+                <td>
+                    NIL
+                </td>
+
+            }
+            else
+            {
+                var record = item.field_60_val;
+                <td>
+                    <ul class="list-group">
+                        @foreach (var entry in record)
+                        {
+                            <li class="list-group-item">@entry.id:  @entry.val</li>
+
+                        }
+
+                    </ul>
+                </td>
+
+            }
+
+            
+
+
+        </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Id</th>
+            <th>field_57</th>
+            <th>field_58</th>
+            <th>field_59</th>
+            <th>field_60</th>
+            <th>field_60_val</th>
+
+        </tr>
+    </tfoot>
+</table>
+
+
+@section Scripts{
+
+    <script>
+
+        $(document).ready(function () {
+            $('#records').DataTable();
+
+
+
+
+        });
+
+    </script>
+}
+

@@ -1,0 +1,157 @@
+﻿
+@{
+    ViewData["Title"] = "Employees";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using ModelLayer.APIRequests.Employee
+@model EmployeeRecords
+
+<h1>Employees</h1>
+<h3>Total Records: @Model.total_items</h3>
+
+
+
+<table id="records" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>field_51</th>
+            <th>field_53</th>
+            <th>field_54</th>
+            <th>field_55</th>
+            <th>field_52</th>
+            <th>field_56</th>
+
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.items)
+        {
+        <tr>
+            <td>@item.id</td>
+            <td>@item.field_51</td>
+            <td>@item.field_53</td>
+
+            @if (item.field_54 == null)
+            {
+                <td>NIL</td>
+            }
+            else
+            {
+                var record = item.field_54;
+                <td>
+                    <ul class="list-group">
+                        @if (!string.IsNullOrWhiteSpace(record.src))
+                        {
+                            <li class="list-group-item">
+                                @*Src: @record.src.Substring(2, record.src.Length)*@
+                                <img src="@record.src" height="@(record.height+"px")" width="@(record.width+"px")" data-publicid="@record.public_id" />
+
+                            </li>
+                        }
+                        <li class="list-group-item">
+                            Src: @record.src
+
+                        </li>
+
+                        <li class="list-group-item">Width: @record.width </li>
+                        <li class="list-group-item">Height: @record.height</li>
+                        <li class="list-group-item">Public Id: @record.public_id  </li>
+
+
+
+
+                    </ul>
+                </td>
+            }
+
+            <td>@item.field_55</td>
+
+
+            @if (item.field_52 == null)
+            {
+                <td>NIL</td>
+            }
+            else
+            {
+                var record = item.field_52;
+                <td>
+                    <ul class="list-group">
+
+
+                        <li class="list-group-item">Address: @record.address </li>
+                        <li class="list-group-item">Address 2: @record.address2</li>
+                        <li class="list-group-item">City: @record.city  </li>
+                        <li class="list-group-item">State: @record.state   </li>
+                        <li class="list-group-item">Country: @record.country  </li>
+                        <li class="list-group-item">Zip: @record.zip  </li>
+                        <li class="list-group-item">Lng: @record.lng  </li>
+                        <li class="list-group-item">Lat: @record.lat  </li>
+
+
+
+
+                    </ul>
+                </td>
+            }
+
+            @if (item.field_56 == null)
+            {
+                <td>NIL</td>
+            }
+            else
+            {
+                var record = item.field_56;
+                <td>
+                    <ul class="list-group">
+
+
+                        <li class="list-group-item">Title: @record.title </li>
+                        <li class="list-group-item">First Name: @record.first_name</li>
+                        <li class="list-group-item">Middle Name: @record.middle_name  </li>
+                        <li class="list-group-item">Last Name: @record.last_name   </li>
+                       
+
+                    </ul>
+                </td>
+            }
+
+
+
+        </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Id</th>
+            <th>field_51</th>
+            <th>field_53</th>
+            <th>field_54</th>
+            <th>field_55</th>
+            <th>field_52</th>
+            <th>field_56</th>
+
+
+        </tr>
+    </tfoot>
+</table>
+
+
+@section Scripts{
+
+    <script>
+
+    $(document).ready(function () {
+        $('#records').DataTable();
+
+
+
+
+    });
+
+    </script>
+}
+

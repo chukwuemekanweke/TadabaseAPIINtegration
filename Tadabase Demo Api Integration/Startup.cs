@@ -14,6 +14,8 @@ using Tadabase_Demo_Api_Integration.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ServiceLayer.Interfaces;
+using ServiceLayer;
+using ModelLayer.Configurations;
 
 namespace Tadabase_Demo_Api_Integration
 {
@@ -43,8 +45,13 @@ namespace Tadabase_Demo_Api_Integration
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            AppSettings appSettings = new AppSettings();
+            Configuration.GetSection("AppSettings").Bind(appSettings);
 
             services.AddTransient<ILoggerManager, LoggerManager>();
+            services.AddTransient<TableRecordsAPIClient>();
+            services.AddSingleton<AppSettings>(appSettings);
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
