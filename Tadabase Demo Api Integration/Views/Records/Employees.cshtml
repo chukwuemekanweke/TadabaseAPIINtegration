@@ -255,12 +255,15 @@
                             <input type="text" class="form-control" id="zip">
                         </div>
                     </div>
+                    <div class="form-row">
+                        <button class="uploadImage btn btn-outline-success " type="button">Upload Image</button>
+                    </div>
 
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary submit"  data-tableId="@ViewBag.TableId">Submit</button>
+                <button type="button" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing Order" class="btn btn-primary submit"  data-tableId="@ViewBag.TableId">Submit</button>
             </div>
 
 
@@ -270,7 +273,8 @@
 
 
 @section Scripts{
-
+    <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript">
+</script>
     <script>
 
         $(document).ready(function () {
@@ -286,8 +290,19 @@
                 });
             })
 
+            $('.uploadImage').on('click', function () {
+                var widget = cloudinary.createUploadWidget({
+                    cloudName: "nweketest", uploadPreset: "ml_default", crop:true
+                }, (error, result) => { console.log({error,result}) });
+                widget.open();
+            });
 
             $('.submit').on('click', function () {
+                var $this = $(this);
+                $this.text('loading');
+               
+             
+
 
                 let title = $("#title").val();
                 let firstName = $("#firstName").val();
@@ -306,37 +321,65 @@
                 let country = $("#country").val();
                 let zip = $("#zip").val();
 
-                let employee =  {
+                let employee = {
                     field_51: date,
                     field_53: email,
                     field_55: employeetype,
                     field_52: {
-                        address: address, address2: address2, city: city, state: state, country: country, zip:zip
+                        address: address, address2: address2, city: city, state: state, country: country, zip: zip
                     },
                     field_54: {
 
                     },
                     field_56: {
-                        title: title, firstName: firstName, middleName: middleName, lastName:lastName
+                        title: title, first_name: firstName, middle_name: middleName, last_name: lastName
                     },
-                }
-                console.log(employee);
+                };
 
                 let tableId = $(this).attr('data-tableId');
+                let baseUrl = window.location.origin;
+                let url = `${baseUrl}/Employees`;
+                let data = { tableId: tableId, data: employee };
+                console.log(data);
                 var request = $.ajax({
-                    url: "/Records/Employees",
+                    url: url,
                     method: "POST",
-                    data: { tableId: tableId, data: employee },
-                    dataType: "html"
+                    contentType:"application/json;charset=utf-8",
+                    data: JSON.stringify(data),
+                    dataType: "json",
+                    error: function (err, textStatus) {
+                        console.log({ err });
+                        alert("Request failed: " + textStatus);
+
+                    },
+                    success: function (data) {
+                        console.log({ data });
+                        if (data.httpStatusCode===200 &&  data.TadabasePostResponse !== null && data.tadabasePostResponse.type.toLowerCase() === "success") {
+                            alert(data.tadabasePostResponse.msg);
+
+                            setTimeout(function () {
+                                location.reload();
+
+                            }, 5000)
+                        }
+                        else {
+                            alert("Request failed: " + data.tadabasePostResponse.msg);
+
+                        }
+                    },
+                    complete: function () {
+                        $this.text('Submit');
+                    }
                 });
 
-                request.done(function (msg) {
-                    $("#log").html(msg);
-                });
+                //request.done(function (data) {
+                //    console.log(data)
+                //    $("#log").html(msg);
+                //});
 
-                request.fail(function (jqXHR, textStatus) {
-                    alert("Request failed: " + textStatus);
-                });
+                //request.fail(function (jqXHR, textStatus) {
+                //    alert("Request failed: " + textStatus);
+                //});
             })
 
         });

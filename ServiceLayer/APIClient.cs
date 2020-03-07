@@ -1,4 +1,5 @@
-﻿using ModelLayer.APIRequests.Customers;
+﻿using ModelLayer.APIRequests;
+using ModelLayer.APIRequests.Customers;
 using ModelLayer.APIRequests.Employee;
 using ModelLayer.APIRequests.Jobs;
 using ModelLayer.APIRequests.Orders;
@@ -11,6 +12,7 @@ using ModelLayer.Configurations;
 using Newtonsoft.Json;
 using ServiceLayer.Interfaces;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -67,7 +69,7 @@ namespace ServiceLayer
 
         #region Save Records
 
-        public async Task SaveEmployee(string tableId, EmployeeRecord employeeRecord)
+        public async Task<GenericPostResponse> SaveEmployee(string tableId, EmployeeRecord employeeRecord)
         {
             string url = string.Format(Constants.RECORDS_IN_TABLE_URL, tableId);
             Dictionary<string, string> keyValuePairs = new Dictionary<string, string>();
@@ -88,9 +90,18 @@ namespace ServiceLayer
             keyValuePairs.Add("field_51", employeeRecord.field_51);
             keyValuePairs.Add("field_53", employeeRecord.field_53);
 
-            StringContent content = new StringContent(JsonConvert.SerializeObject(keyValuePairs), Encoding.UTF8, "application/json");
+            FormUrlEncodedContent content = new FormUrlEncodedContent(keyValuePairs);
 
             HttpResponseMessage httpResponseMessage = await HttpClient.PostAsync(url, content);
+            TadabasePostResponse response = await ProcessResponse<TadabasePostResponse>(httpResponseMessage);
+
+            HttpStatusCode httpStatusCode = httpResponseMessage.StatusCode;
+            GenericPostResponse postResponse = new GenericPostResponse
+            {
+                HttpStatusCode = httpStatusCode,
+                TadabasePostResponse = response
+            };
+            return postResponse;
         }
 
 
