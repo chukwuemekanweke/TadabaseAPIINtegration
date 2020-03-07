@@ -8,8 +8,11 @@ using ModelLayer.APIRequests.Supliers;
 using ModelLayer.APIRequests.Tasks;
 using ModelLayer.APIResponses;
 using ModelLayer.Configurations;
+using Newtonsoft.Json;
 using ServiceLayer.Interfaces;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace ServiceLayer
@@ -47,7 +50,7 @@ namespace ServiceLayer
 
         #region Retrieving Records
 
-        public async Task<T> GetRecrds<T>(string tableId) where T:class
+        public async Task<T> GetRecrds<T>(string tableId) where T : class
         {
             string url = string.Format(Constants.RECORDS_IN_TABLE_URL, tableId);
             HttpResponseMessage httpResponseMessage = await HttpClient.GetAsync(url);
@@ -55,70 +58,39 @@ namespace ServiceLayer
             return response;
         }
 
-        public async Task<ProductRecords> GetProductRecords(string tableId)
+
+
+        #endregion
+
+
+
+
+        #region Save Records
+
+        public async Task SaveEmployee(string tableId, EmployeeRecord employeeRecord)
         {
             string url = string.Format(Constants.RECORDS_IN_TABLE_URL, tableId);
-            HttpResponseMessage httpResponseMessage = await HttpClient.GetAsync(url);
-            ProductRecords response = await ProcessResponse<ProductRecords>(httpResponseMessage);
-            return response;
-        }
+            Dictionary<string, string> keyValuePairs = new Dictionary<string, string>();
+            keyValuePairs.Add("field_56[title]", employeeRecord.field_56.title);
+            keyValuePairs.Add("field_56[first_name]", employeeRecord.field_56.first_name);
+            keyValuePairs.Add("field_56[middle_name]", employeeRecord.field_56.middle_name);
+            keyValuePairs.Add("field_56[last_name]", employeeRecord.field_56.last_name);
 
+            keyValuePairs.Add("field_52[address]", employeeRecord.field_52.address);
+            keyValuePairs.Add("field_52[address2]", employeeRecord.field_52.address2);
+            keyValuePairs.Add("field_52[city]", employeeRecord.field_52.city);
+            keyValuePairs.Add("field_52[state]", employeeRecord.field_52.state);
+            keyValuePairs.Add("field_52[country]", employeeRecord.field_52.country);
+            keyValuePairs.Add("field_52[zip]", employeeRecord.field_52.zip);
+            keyValuePairs.Add("field_52[lng]", employeeRecord.field_52.lng);
+            keyValuePairs.Add("field_52[lat]", employeeRecord.field_52.lat);
 
-        public async Task<EmployeeRecords> GetEmployeeRecords(string tableId)
-        {
-            string url = string.Format(Constants.RECORDS_IN_TABLE_URL, tableId);
-            HttpResponseMessage httpResponseMessage = await HttpClient.GetAsync(url);
-            EmployeeRecords response = await ProcessResponse<EmployeeRecords>(httpResponseMessage);
-            return response;
-        }
+            keyValuePairs.Add("field_51", employeeRecord.field_51);
+            keyValuePairs.Add("field_53", employeeRecord.field_53);
 
-        public async Task<SupplierRecords> GetSupplierRecords(string tableId)
-        {
-            string url = string.Format(Constants.RECORDS_IN_TABLE_URL, tableId);
-            HttpResponseMessage httpResponseMessage = await HttpClient.GetAsync(url);
-            SupplierRecords response = await ProcessResponse<SupplierRecords>(httpResponseMessage);
-            return response;
-        }
+            StringContent content = new StringContent(JsonConvert.SerializeObject(keyValuePairs), Encoding.UTF8, "application/json");
 
-        public async Task<ProjectRecords> GetProjectRecords(string tableId)
-        {
-            string url = string.Format(Constants.RECORDS_IN_TABLE_URL, tableId);
-            HttpResponseMessage httpResponseMessage = await HttpClient.GetAsync(url);
-            ProjectRecords response = await ProcessResponse<ProjectRecords>(httpResponseMessage);
-            return response;
-        }
-
-
-        public async Task<JobRecords> GetJobRecords(string tableId)
-        {
-            string url = string.Format(Constants.RECORDS_IN_TABLE_URL, tableId);
-            HttpResponseMessage httpResponseMessage = await HttpClient.GetAsync(url);
-            JobRecords response = await ProcessResponse<JobRecords>(httpResponseMessage);
-            return response;
-        }
-
-        public async Task<TaskRecords> GetTaskRecords(string tableId)
-        {
-            string url = string.Format(Constants.RECORDS_IN_TABLE_URL, tableId);
-            HttpResponseMessage httpResponseMessage = await HttpClient.GetAsync(url);
-            TaskRecords response = await ProcessResponse<TaskRecords>(httpResponseMessage);
-            return response;
-        }
-
-        public async Task<CustomerRecords> GetCustomersRecords(string tableId)
-        {
-            string url = string.Format(Constants.RECORDS_IN_TABLE_URL, tableId);
-            HttpResponseMessage httpResponseMessage = await HttpClient.GetAsync(Constants.LIST_OF_TABLES_URL);
-            CustomerRecords response = await ProcessResponse<CustomerRecords>(httpResponseMessage);
-            return response;
-        }
-
-        public async Task<OrdersRecords> GetOrderRecords(string tableId)
-        {
-            string url = string.Format(Constants.RECORDS_IN_TABLE_URL, tableId);
-            HttpResponseMessage httpResponseMessage = await HttpClient.GetAsync(Constants.LIST_OF_TABLES_URL);
-            OrdersRecords response = await ProcessResponse<OrdersRecords>(httpResponseMessage);
-            return response;
+            HttpResponseMessage httpResponseMessage = await HttpClient.PostAsync(url, content);
         }
 
 
