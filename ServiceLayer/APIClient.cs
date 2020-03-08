@@ -78,6 +78,12 @@ namespace ServiceLayer
             keyValuePairs.Add("field_56[middle_name]", employeeRecord.field_56.middle_name);
             keyValuePairs.Add("field_56[last_name]", employeeRecord.field_56.last_name);
 
+            keyValuePairs.Add("field_54[src]", employeeRecord.field_54.src);
+            keyValuePairs.Add("field_54[width]", employeeRecord.field_54.width);
+            keyValuePairs.Add("field_54[height]", employeeRecord.field_54.height);
+            keyValuePairs.Add("field_54[public_id]", employeeRecord.field_54.public_id);
+
+
             keyValuePairs.Add("field_52[address]", employeeRecord.field_52.address);
             keyValuePairs.Add("field_52[address2]", employeeRecord.field_52.address2);
             keyValuePairs.Add("field_52[city]", employeeRecord.field_52.city);
@@ -89,6 +95,8 @@ namespace ServiceLayer
 
             keyValuePairs.Add("field_51", employeeRecord.field_51);
             keyValuePairs.Add("field_53", employeeRecord.field_53);
+
+            keyValuePairs.Add("field_55", employeeRecord.field_55);
 
             FormUrlEncodedContent content = new FormUrlEncodedContent(keyValuePairs);
 
