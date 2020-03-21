@@ -1,7 +1,13 @@
 ﻿namespace ModelLayer.APIRequests.Employee
 {
-    
 
+
+
+    public class EmployeeSingleRecord
+    {
+        public string type { get; set; }
+        public EmployeeRecord item { get; set; }
+    }
 
 
     public class EmployeeRecords

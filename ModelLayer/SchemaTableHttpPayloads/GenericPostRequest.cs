@@ -5,6 +5,13 @@ using System.Text;
 
 namespace ModelLayer.APIRequests
 {
+
+    public class DeleteRequest
+    {
+        public string TableId { get; set; }
+        public string RecordId { get; set; }
+    }
+
     public class EmployeeRequest<T> where T : class
     {
         public string TableId { get; set; }

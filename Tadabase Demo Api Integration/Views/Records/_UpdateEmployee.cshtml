@@ -1,0 +1,318 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using ModelLayer.APIRequests.Employee
+@model EmployeeSingleRecord
+
+@{ EmployeeRecord employeeRecord = Model.item; }
+
+<div id="updateModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Employee Form</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 progressBarSection" hidden>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 10%;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">10%</div>
+                        </div>
+                    </div>
+
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-12">
+                        <form>
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <img class="img" src="@employeeRecord.field_54?.src" width="100" height="100"/>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="updateTitle">Title</label>
+                                    <select id="updateTitle" class="form-control" asp-for="@employeeRecord.field_56.title" asp-items="@ViewBag.Titles"></select>
+
+                                    @*<select id="title" class="form-control">
+
+                                            <option value="" selected>Choose...</option>
+                                            <option value="Mr">Mr</option>
+                                            <option value="Mrs">Mrs</option>
+                                            <option value="Miss">Miss</option>
+                                            <option value="Dr">Dr</option>
+                                            <option value="Prof">Prof</option>
+
+
+
+                                        </select>*@
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="updateFirstName">First Name</label>
+                                    <input asp-for="@employeeRecord.field_56.first_name" type="text" class="form-control" id="updateFirstName" placeholder="First Name">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="updateMiddleName">Middle Name</label>
+                                    <input asp-for="@employeeRecord.field_56.middle_name" type="text" class="form-control" id="updateMiddleName" placeholder="Middle Name">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="updateLastName">Last Name</label>
+                                    <input asp-for="@employeeRecord.field_56.last_name" type="text" class="form-control" id="updateLastName" placeholder="Last Name">
+                                </div>
+                            </div>
+                            <br />
+                            <hr />
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="updateEmail">Email Addres</label>
+                                    <input asp-for="@employeeRecord.field_53" type="email" class="form-control" id="updateEmail" placeholder="Email Address">
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="updateEmployeetype">Employee Type</label>
+                                    <select id="updateEmployeetype" class="form-control" asp-for="@employeeRecord.field_55" asp-items="@ViewBag.Titles"></select>
+
+                                    @*<select id="employeetype" class="form-control">
+                                            <option value="" selected>Choose...</option>
+                                            <option value="Logistics Driver">Logistics Driver</option>
+                                            <option value="Sales Clerk">Sales Clerk</option>
+                                        </select>*@
+
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="updateDateofbirth">Date of Birth</label>
+                                    <input type="date" asp-for="@employeeRecord.field_51" class="form-control" id="updateDateofbirth" placeholder="Date Of Birth">
+                                </div>
+
+
+                            </div>
+
+                            <br />
+                            <hr />
+                            <div class="form-row">
+
+                                <div class="form-group col-md-6">
+                                    <label for="updateAddress">Address</label>
+                                    <input type="text" asp-for="@employeeRecord.field_52.address" class="form-control" id="updateAddress" placeholder="1234 Main St">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="updateAddress2">Address 2</label>
+                                    <input type="text" asp-for="@employeeRecord.field_52.address2" class="form-control" id="updateAddress2" placeholder="Apartment, studio, or floor">
+                                </div>
+
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-3">
+                                    <label for="updateCity">City</label>
+                                    <input asp-for="@employeeRecord.field_52.city" type="text" class="form-control" id="updateCity" placeholder="Email Address">
+
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="updateState">State</label>
+                                    <select id="updateState" class="form-control" asp-for="@employeeRecord.field_52.state" asp-items="@ViewBag.States"></select>
+
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="country">Country</label>
+                                    <input asp-for="@employeeRecord.field_52.country" type="text" class="form-control" id="country" placeholder="Email Address">
+
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="updateZip">Zip</label>
+                                    <input asp-for="@employeeRecord.field_52.zip" type="text" class="form-control" id="updateZip" placeholder="Email Address">
+
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <button class="uploadImage btn btn-outline-success " type="button">Upload Image</button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
+                <button type="button" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Processing Order" class="btn btn-primary updateSubmit" data-recordId="@employeeRecord.id" data-tableId="@ViewBag.TableId">Submit</button>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+        $(document).ready(function () {
+
+
+            let imageurl = '';
+            let width = 0;
+            let height = 0;
+            let publicId = '';
+
+
+            $('.uploadImage').on('click', function () {
+                var widget = cloudinary.createUploadWidget({
+                    cloudName: "nweketest", uploadPreset: "ml_default", crop: true
+                }, (error, result) => {
+
+                    if (result && result.event === "success") {
+                        publicId = result.info.public_id;
+                        width = result.info.width;
+                        height = result.info.height;
+                        imageurl = result.info.url;
+                    }
+
+                });
+                widget.open();
+            });
+
+            $('.updateSubmit').on('click', function () {
+
+                var $this = $(this);
+                $this.text('loading');
+
+                $this.attr('disabled', true);
+                $(".close").hide();
+
+                let id = $(this).attr('data-recordId');
+
+                let title = $("#updateTitle").val();
+                let firstName = $("#updateFirstName").val();
+                let middleName = $("#updateMiddleName").val();
+                let lastName = $("#updateLastName").val();
+
+                let date = $("#updateDateofbirth").val();
+                let email = $("#updateEmail").val();
+                let employeetype = $("#updateEmployeetype").val();
+
+
+                let address = $("#updateAddress").val();
+                let address2 = $("#updateAddress2").val();
+                let city = $("#updateCity").val();
+                let state = $("#updateState").val();
+                let country = $("#updateCountry").val();
+                let zip = $("#updateZip").val();
+
+                let employee = {
+                    id: id,
+                    field_51: date,
+                    field_53: email,
+                    field_55: employeetype,
+                    field_52: {
+                        address: address, address2: address2, city: city, state: state, country: country, zip: zip
+                    },
+                    field_54: {
+                        src: imageurl, width: width, height: height, public_id: publicId
+                    },
+                    field_56: {
+                        title: title, first_name: firstName, middle_name: middleName, last_name: lastName
+                    },
+                };
+
+                let tableId = $(this).attr('data-tableId');
+                let baseUrl = window.location.origin;
+                let url = `${baseUrl}/Records/UpdateEmployee`;
+                let data = { tableId: tableId, data: employee };
+                console.log(data);
+                var request = $.ajax({
+                    url: url,
+                    method: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    data: JSON.stringify(data),
+                    dataType: "json",
+                    error: function (err, textStatus) {
+                        console.log({ err });
+                        alert("Request failed: " + textStatus);
+
+                    },
+                    success: function (data) {
+                        console.log({ data });
+                        if (data.httpStatusCode === 200 && data.TadabasePostResponse !== null && data.tadabasePostResponse.type.toLowerCase() === "success") {
+                            alert(data.tadabasePostResponse.msg);
+
+                            $(".progressBarSection").removeAttr("hidden");
+
+                            setTimeout(function () {
+                                $(".progress-bar").attr("aria-valuenow", 25);
+                                $(".progress-bar").width("25%");
+                                $(".progress-bar").text('25%');
+
+                                setTimeout(function () {
+
+                                    $(".progress-bar").attr("aria-valuenow", 50);
+                                    $(".progress-bar").width("50%");
+                                    $(".progress-bar").text('50%');
+
+                                    setTimeout(function () {
+
+                                        $(".progress-bar").attr("aria-valuenow", 75);
+                                        $(".progress-bar").width("75%");
+                                        $(".progress-bar").text('75%');
+
+
+
+                                        setTimeout(function () {
+
+                                            $(".progress-bar").attr("aria-valuenow", 100);
+                                            $(".progress-bar").width("100%");
+                                            $(".progress-bar").text('100%');
+                                            setTimeout(function () {
+                                                location.reload();
+
+
+                                            }, 1000)
+                                        }, 1000)
+                                    }, 1000)
+
+                                }, 1000)
+
+                            }, 1000)
+                        }
+                        else {
+                            alert("Request failed: " + data.tadabasePostResponse.msg);
+
+                        }
+                    },
+                    complete: function () {
+                        $this.text('Submit');
+                        $this.attr('disabled', false);
+
+                        $(".close").show();
+
+                    }
+                });
+
+                //request.done(function (data) {
+                //    console.log(data)
+                //    $("#log").html(msg);
+                //});
+
+                //request.fail(function (jqXHR, textStatus) {
+                //    alert("Request failed: " + textStatus);
+                //});
+            })
+
+          
+
+        });
+
+</script>

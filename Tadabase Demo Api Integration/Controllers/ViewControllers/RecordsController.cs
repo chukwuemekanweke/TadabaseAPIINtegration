@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using ModelLayer;
 using ModelLayer.APIRequests;
 using ModelLayer.APIRequests.Customers;
@@ -148,6 +149,59 @@ namespace Tadabase_Demo_Api_Integration.Controllers.ViewControllers
             ViewBag.TableId = tableId;
             ProductRecords records = await TableRecordsAPIClient.GetRecrds<ProductRecords>(tableId);
             return View(records);
+        }
+
+
+        [HttpPost("Records/DeleteEmployee")]
+        public async Task<IActionResult> DeleteEmployee([FromBody] DeleteRequest model)
+        {
+            GenericPostResponse genericPostResponse = await TableRecordsAPIClient.DeleteEmployee(model.TableId, model.RecordId);
+            return Json(genericPostResponse);
+        }
+
+        [HttpPost("Records/UpdateEmployee")]
+        public async Task<IActionResult> _UpdateEmployee([FromBody] EmployeeRequest<EmployeeRecord> model)
+        {
+            GenericPostResponse genericPostResponse = await TableRecordsAPIClient.UpdateEmployee(model.TableId,model.Data.id, model.Data);
+            return Json(genericPostResponse);
+        }
+
+        [HttpGet("Records/[action]")]
+        public async Task<IActionResult> _UpdateEmployee(string tableId,string recordId)
+        {
+
+         List<SelectListItem> titles =  new List<SelectListItem>
+        {
+            new SelectListItem { Value = "Mr", Text = "Mr" },
+            new SelectListItem { Value = "Mrs", Text = "Mrs" },
+            new SelectListItem { Value = "Miss", Text = "Miss"  },
+            new SelectListItem { Value = "Dr", Text = "Dr"  },
+            new SelectListItem { Value = "Prof", Text = "Prof"  },
+
+        };
+
+         List<SelectListItem> employeeType = new List<SelectListItem>
+        {
+            new SelectListItem { Value = "Logistics Driver", Text = "Logistics Driver" },
+            new SelectListItem { Value = "Sales Clerk", Text = "Sales Clerk" },
+            
+        };
+
+            List<SelectListItem> states = new List<SelectListItem>
+        {
+            new SelectListItem { Value = "Chicago", Text = "Chicago" },
+            new SelectListItem { Value = "Houston", Text = "Houston" },
+            new SelectListItem { Value = "New Jersey", Text = "New Jersey" },
+
+        };
+            ViewBag.Titles = titles;
+         ViewBag.EmployeeType = employeeType;
+            ViewBag.States = states;
+
+        EmployeeSingleRecord record = await TableRecordsAPIClient.GetRecord<EmployeeSingleRecord>(tableId,recordId);
+            ViewBag.TableId = tableId;
+            return PartialView("_UpdateEmployee",record);
+
         }
     }
 }

@@ -27,8 +27,7 @@ namespace ServiceLayer
             HttpClient.DefaultRequestHeaders.Add("X-Tadabase-App-id", AppSettings.AppId);
             HttpClient.DefaultRequestHeaders.Add("X-Tadabase-App-Key", AppSettings.AppKey);
             HttpClient.DefaultRequestHeaders.Add("X-Tadabase-App-Secret", AppSettings.AppSecret);
-
-
+            
         }
 
         public async Task<T> ProcessResponse<T>(HttpResponseMessage responseMessage) where T : class
