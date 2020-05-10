@@ -151,6 +151,7 @@ namespace Tadabase_Demo_Api_Integration.Controllers.ViewControllers
             return View(records);
         }
 
+        #region Delete employee Record
 
         [HttpPost("Records/DeleteEmployee")]
         public async Task<IActionResult> DeleteEmployee([FromBody] DeleteRequest model)
@@ -159,12 +160,17 @@ namespace Tadabase_Demo_Api_Integration.Controllers.ViewControllers
             return Json(genericPostResponse);
         }
 
+        #endregion
+
+        #region Update employee record
+
         [HttpPost("Records/UpdateEmployee")]
         public async Task<IActionResult> _UpdateEmployee([FromBody] EmployeeRequest<EmployeeRecord> model)
         {
             GenericPostResponse genericPostResponse = await TableRecordsAPIClient.UpdateEmployee(model.TableId,model.Data.id, model.Data);
             return Json(genericPostResponse);
         }
+        #endregion
 
         [HttpGet("Records/[action]")]
         public async Task<IActionResult> _UpdateEmployee(string tableId,string recordId)
@@ -194,11 +200,12 @@ namespace Tadabase_Demo_Api_Integration.Controllers.ViewControllers
             new SelectListItem { Value = "New Jersey", Text = "New Jersey" },
 
         };
-            ViewBag.Titles = titles;
+         ViewBag.Titles = titles;
          ViewBag.EmployeeType = employeeType;
-            ViewBag.States = states;
+        ViewBag.States = states;
 
         EmployeeSingleRecord record = await TableRecordsAPIClient.GetRecord<EmployeeSingleRecord>(tableId,recordId);
+
             ViewBag.TableId = tableId;
             return PartialView("_UpdateEmployee",record);
 

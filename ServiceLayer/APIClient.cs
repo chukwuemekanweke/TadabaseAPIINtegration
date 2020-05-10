@@ -137,7 +137,7 @@ namespace ServiceLayer
         }
 
 
-            public async Task<GenericPostResponse> UpdateEmployee(string tableId, string recordId, EmployeeRecord employeeRecord)
+        public async Task<GenericPostResponse> UpdateEmployee(string tableId, string recordId, EmployeeRecord employeeRecord)
         {
             string url = string.Format(Constants.UPDATE_RECORD, tableId,recordId);
             Dictionary<string, string> keyValuePairs = new Dictionary<string, string>();
